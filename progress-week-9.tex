@@ -54,19 +54,19 @@ Both Spearman's Rank Correlation Coefficient and Pearson Correlation Coefficient
 \subsection{Initiative}
 After learning about Spearman's Rank Correlation Coefficient, I figured out that I did not need to compute the memorability score for each video in this challenge. Another potential approach was to sort the video list for its memorability. For example, given three videos A, B and C with theirs grouth truth memorability score of [0.2, 0.9, 0.4]; I had to generate a list of ranking in term of their memorability starting with the lowest one which was [1, 3, 2]. Computing Spearman's Rank Correlation Coefficient on [0.2, 0.9, 0.4] and [1, 3, 2] would give you the correlation of 1.0, which was the best score of this metric.
 
-\section{Long-Short Term Memory Network on Extracted Features}
+\section{Long - Short Term Memory Network on Extracted Features}
 \subsection{Architecture}
-I first try to connect one Long-Short Term Memory\cite{lstm} cell with one fully-connected layer to classify between 2 classes. According to an example from PyTorch, they preferred training the network sample by sample, so I tried to do that too. And the network worked, so I tried to stack 8 Long-Short Term Memory cells to test (I thought that I had 8 images per video, so stacking 8 Long-Short Term Memory cells a time was a good choice). The figure below almost demonstrated correctly what I had done so far; the key difference was that at the final <end> gate, I also added one fully-connected layer of size [2048, 2] as a classifier.
+I first try to connect one Long - Short Term Memory\cite{lstm} cell with one fully-connected layer to classify between 2 classes. According to an example from PyTorch, they preferred training the network sample by sample, so I tried to do that too. And the network worked, so I tried to stack 8 Long - Short Term Memory cells to test (I thought that I had 8 images per video, so stacking 8 Long - Short Term Memory cells a time was a good choice). The figure below almost demonstrated correctly what I had done so far; the key difference was that at the final <end> gate, I also added one fully-connected layer of size [2048, 2] as a classifier.
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=\textwidth]{week9-lstm-network.png}
-\caption{Long-Short Term Memory Network}
+\caption{Long - Short Term Memory Network}
 \end{figure}
 
-In training process, there were some key differences such as I need to clear out the gradients before each input video (using \emph{model.zero\_grad()}) because PyTorch accumulated them. And I also need to clear out the hidden state of the Long-Short Term Memory, to detach the cell from its history on the last input video.
+In training process, there were some key differences such as I need to clear out the gradients before each input video (using \emph{model.zero\_grad()}) because PyTorch accumulated them. And I also need to clear out the hidden state of the Long - Short Term Memory, to detach the cell from its history on the last input video.
 
 \subsection{Problems}
-This was the first time I worked with Long-Short Term Memory cells. Although I had already obtained the main idea of Long-Short Term Memory, but in PyTorch I was so confused with the Long-Short Term Memory stacking, training, designing techniques. And I did not know how to evaluate my network, whether it was right or wrong, did I violate any rules or would it work effectively as I expected.
+This was the first time I worked with Long - Short Term Memory cells. Although I had already obtained the main idea of Long - Short Term Memory, but in PyTorch I was so confused with the Long - Short Term Memory stacking, training, designing techniques. And I did not know how to evaluate my network, whether it was right or wrong, did I violate any rules or would it work effectively as I expected.
 
 I did not think that my network was reliable. One epoch costed so much time, about 2.5 minutes, so if I wanted to train my network with 300 epochs it would take me 12.5 hours. I had trained my network for 150 epochs until Colab shut my session down. And even though after 150 epochs, I still got a 5-digit loss number (around 22,000).
