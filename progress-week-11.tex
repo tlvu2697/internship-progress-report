@@ -18,7 +18,7 @@ I re-designed my LSTM network using TensorFlow library and the figure below woul
 
 \subsection{Training on Dev-Set (extracted by ResNet50)}
 \subsubsection{Strategy}
-This times I broke the problem into the classification problem of 101 cate-gories. Because I thought this dataset was pretty small for deeplearning so I splitted the provided dev-set for this challenge into two parts, since the dev-set had 8000 videos, I picked \textbf{\emph{7000}} videos for training and \textbf{\emph{1000}} for testing.
+This times I broke the problem into the classification problem of 101 cate-gories. Because I thought this dataset was pretty small for deeplearning so I splitted the provided Dev-Set for this challenge into two parts, since the Dev-Set had 8000 videos, I picked \textbf{\emph{7000}} videos for training and \textbf{\emph{1000}} videos for testing.
 
 \subsubsection{Version 1}
 In this version, I trained a batch of size \textbf{\emph{128}} at once, with \textbf{\emph{512}} LSTM units for each LSTM cell and \textbf{\emph{7000}} iterations.
@@ -56,7 +56,7 @@ After 7000 iterations, the loss value was \textbf{\emph{0.06}} and the accuracy 
 
 \subsection{Training on Dev-Set (extracted by Places365)}
 \subsubsection{Strategy}
-I also broke the problem into the classification problem of 101 cate-gories. I first passed all of my input through Places365's pre-trained ResNet18 network and used those features as input of my LSTM network. The features extracted by ResNet18 had the dimension of \textbf{\emph{512}}. I aslo picked \textbf{\emph{7000}} videos for training and \textbf{\emph{1000}} for testing too.
+I also broke the problem into the classification problem of 101 cate-gories. I first passed all of my input through Places365's pre-trained ResNet18 network and used those features as input of my LSTM network. The features extracted by ResNet18 had the dimension of \textbf{\emph{512}}. I aslo picked \textbf{\emph{7000}} videos for training and \textbf{\emph{1000}} videos for testing too.
 
 \subsubsection{Version 1}
 In this version, I trained a batch of size \textbf{\emph{128}} at once, with \textbf{\emph{256}} LSTM units for each LSTM cell and \textbf{\emph{7000}} iterations.
