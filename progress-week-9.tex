@@ -8,9 +8,9 @@ With 10,000 videos from the whole dataset, I used \emph{ffmpeg} to extract frame
 This was the command line which I used to extract frames from a video. \textbf{\emph{ffmpeg -i video1.mp4 -r 1 video1-\%02d.jpg}}. The \textbf{\emph{-i}} indicated input file; \textbf{\emph{-r}} was the number of frames per second I wanted to extract (e.g. \emph{-r 1} meant 1 frame per second,  \emph{-r 0.1} meant 1 frame every 10 seconds); and the term \textbf{\emph{\%02d}} was used by \textbf{\emph{ffmpeg}} to name the output frames.
 
 \subsection{Using Tensor Hub}
-TensorFlow\cite{tensorflow} provided Tensor Hub which was a library for reusable machine learning modules. Tensor Hub maintained several modules to extract image feature vectors like Inception, MobileNet, ResNet and DenseNet.
+TensorFlow\cite{tensorflow} provided Tensor Hub which was a library for reusable ma-chine learning modules. Tensor Hub maintained several modules to extract image feature vectors like Inception, MobileNet, ResNet and DenseNet.
 
-I successfully extracted images' features but the result stucked in the variables themselves and I could not write those values to text files or numpy pickles. According to my research, I had to construct my code in a TensorFlow session to read those values, but I still got tons of errors by TensonFlow.
+I successfully extracted images' features but the result stucked in the vari-ables themselves and I could not write those values to text files or numpy pickles. According to my research, I had to construct my code in a TensorFlow session to read those values, but I still got tons of errors by TensonFlow.
 
 I would have to learn more about how to use TensorFlow correctly and try my luck again.
 
@@ -28,7 +28,7 @@ The length of feature vector of both ResNet and Inception v3 was 2048. For each 
 
 \section{Evaluation Metrics}
 \subsection{Pearson Correlation Coefficient}
-One of the three evaluation metrics proposed by MultiMediaEval was Pearson Correlation Coefficient. It was the measure of the linear correlation between two variables X and Y. It had a value between +1 and −1, where 1 was total positive linear correlation, 0 was no linear correlation, and −1 was total negative linear correlation. Pearson correlation coefficient was the covariance of the two variables divided by the product of their standard deviations.
+One of the three evaluation metrics proposed by MultiMediaEval was Pear-son Correlation Coefficient. It was the measure of the linear correlation between two variables X and Y. It had a value between +1 and -1, where 1 was total positive linear correlation, 0 was no linear correlation, and -1 was total negative linear correlation. Pearson correlation coefficient was the covariance of the two variables divided by the product of their standard deviations.
 
 \begin{figure}[!ht]
 \centering
@@ -37,7 +37,7 @@ One of the three evaluation metrics proposed by MultiMediaEval was Pearson Corre
 \end{figure}
 
 \subsection{Spearman's Rank Correlation Coefficient}
-The second evaluation metrics proposed was the Spearman's Rank Correlation Coefficient. It assessed how well the relationship between two variables could be described using a monotonic function. The Spearman correlation between two variables would be high when observations had a similar rank between the two variables, and low when observations have a dissimilar (or fully opposed for a correlation of −1) rank between the two variables. The Spearman correlation between two variables was equal to the Pearson correlation between the ranked values of those two variables; while Pearson's correlation assessed linear relationships, Spearman's correlation assessed monotonic relationships. The term ranked variables refered to the data transformation in which numerical or ordinal values were replaced by their rank when the data were sorted (e.g. given the numerical data 3.4, 5.1, 2.6, 7.3; the ranks of these data items would be 2, 3, 1 and 4 respectively).
+The second evaluation metrics proposed was the Spearman's Rank Cor-relation Coefficient. It assessed how well the relationship between two variables could be described using a monotonic function. The Spearman correlation between two variables would be high when observations had a similar rank between the two variables, and low when observations have a dissimilar (or fully opposed for a correlation of −1) rank between the two variables. The Spearman correlation between two variables was equal to the Pearson correlation between the ranked values of those two variables; while Pearson's correlation assessed linear relation-ships, Spearman's correlation assessed monotonic relationships. The term ranked variables refered to the data transformation in which numerical or ordinal values were replaced by their rank when the data were sorted (e.g. given the numerical data 3.4, 5.1, 2.6, 7.3; the ranks of these data items would be 2, 3, 1 and 4 respectively).
 
 \begin{figure}[!ht]
 \centering
@@ -49,12 +49,12 @@ The second evaluation metrics proposed was the Spearman's Rank Correlation Coeff
 The last evaluation metric was the Mean-Square Error between two variables. I did not think this metric could be helpful for my approaches.
 
 \subsection{Scipy Stats}
-Both Spearman's Rank Correlation Coefficient and Pearson Correlation Coefficient were supported by Scipy.Stats. The usage of each metric could be found \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.spearmanr.html}{here} and \href{https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.stats.pearsonr.html}{here}.
+Both Spearman's Rank Correlation Co-efficient and Pearson Correlation Coefficient were supported by Scipy.Stats. The usage of each metric could be found \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.spearmanr.html}{here} and \href{https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.stats.pearsonr.html}{here}.
 
 \subsection{Initiative}
-After learning about Spearman's Rank Correlation Coefficient, I figured out that I did not need to compute the memorability score for each video in this challenge. Another potential approach was to sort the video list for its memorability. For example, given three videos A, B and C with theirs grouth truth memorability score of [0.2, 0.9, 0.4]; I had to generate a list of ranking in term of their memorability starting with the lowest one which was [1, 3, 2]. Computing Spearman's Rank Correlation Coefficient on [0.2, 0.9, 0.4] and [1, 3, 2] would give you the correlation of 1.0, which was the best score of this metric.
+After learning about Spearman's Rank Correlation Coefficient, I figured out that I did not need to compute the memorability score for each video in this challenge. Another potential approach was to sort the video list for its memorability. For example, given three videos A, B and C with theirs grouth truth memorability score of \textbf{\emph{[0.2, 0.9, 0.4]}}; I had to generate a list of ranking in term of their memorability starting with the lowest one which was \textbf{\emph{[1, 3, 2]}}. Computing Spearman's Rank Correlation Coefficient on \textbf{\emph{[0.2, 0.9, 0.4]}} and \textbf{\emph{[1, 3, 2]}} would give me the correlation of \textbf{\emph{1.0}}, which was the best score of this metric.
 
-\section{Long - Short Term Memory Network on Extracted Features}
+\section{LSTM Network on Extracted Features}
 \subsection{Architecture}
 I first try to connect one Long - Short Term Memory\cite{lstm} cell with one fully-connected layer to classify between 2 classes. According to an example from PyTorch, they preferred training the network sample by sample, so I tried to do that too. And the network worked, so I tried to stack 8 Long - Short Term Memory cells to test (I thought that I had 8 images per video, so stacking 8 Long - Short Term Memory cells a time was a good choice). The figure below almost demonstrated correctly what I had done so far; the key difference was that at the final <end> gate, I also added one fully-connected layer of size [2048, 2] as a classifier.
 

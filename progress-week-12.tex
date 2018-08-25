@@ -84,7 +84,7 @@ The authors claimed that the entire model was fully differentiable and train-ed 
 Instead of using the input image feature vector of dimensions [14 $\times$ 14 $\times$ 1024] and having the sequence length of 14 $\times$ 14 as AMNet, I used the input image feature vector of dimensions [1 $\times$ 2048] and my sequence length was 1. I did not want to complicate my loss function, I just used the mean squared error only. I splitted the LaMem-Set for into two parts, the total number of images was \textbf{\emph{55000}}, I picked \textbf{\emph{45000}} images for training, and \textbf{\emph{10000}} images testing.
 
 \subsubsection{Version 1}
-In this version I had my input size of \textbf{\emph{2048}}, hidden size of \textbf{\emph{1024}}, \textbf{\emph{3}} stacking LSTM layer and as mentioned above, my sequence length of \textbf{\emph{1}}. My ADAM optimizer's learning rate was \textbf{\emph{1e-4}}. I trained this version with \textbf{\emph{200}} epochs and saved the snapshot which had the highest correlation value on test set. The loss and the correlation both behaved stably.
+In this version I had my input size of \textbf{\emph{2048}}, hidden size of \textbf{\emph{1024}}, \textbf{\emph{3}} stacking LSTM layer and as mentioned above, my sequence length of \textbf{\emph{1}}. My ADAM optimizer's learning rate was \textbf{\emph{1e-4}}. I trained this version with \textbf{\emph{200}} epochs and saved the snapshot which had the highest correlation value on test set. The loss and the correlation value both behaved stably.
 
 \begin{figure}[!ht]
 \centering
@@ -98,9 +98,9 @@ In this version I had my input size of \textbf{\emph{2048}}, hidden size of \tex
 \caption{Correlation over Epoch (on Test set).}
 \end{figure}
 
-The loss and correlation value stopped significantly changing from the epoch $100^{th}$ so I thought it only needed 100 epochs to converge. After 200 epochs, my loss was about \textbf{\emph{0.117}} and my final correlation value on test set was \textbf{\emph{0.61}}.
+The loss and correlation value stopped significantly changing from the epoch $100^{th}$ so I thought it only needed 100 epochs to converge. After 200 epochs, my loss value was around \textbf{\emph{0.117}} and my final correlation value on test set was \textbf{\emph{0.61}}.
 
-Later, I used this pre-trained model to calculate the correlation value on the Dev-Set but predictably, the result was absolutely terrible, it was not even a positive number.
+Lately, I used this pre-trained model to calculate the correlation value on the Dev-Set but predictably, the result was absolutely terrible, it was not even a positive number.
 
 \subsection{Training on Dev-Set (extracted by ResNet50)}
 \subsubsection{Strategy}
@@ -109,7 +109,26 @@ I used the same input strategy as the previous version that I trained on LaMem-S
 \subsection{Version 1}
 I kept the input size and hidden size as the same as the previous version that I trained on LaMem-Set. This times I changed the number of stacking LSTM layer to \textbf{\emph{1}} and the sequence length to \textbf{\emph{8}}. There was one new hyper-parameter gamma which specified the impact of the attention penalty. I used its value of \textbf{\emph{1e-3}}. Finally was the ADAM optimizer with learning rate of \textbf{\emph{1e-4}}.
 
-After 
+After \textbf{\emph{100}} epochs I luckily got the loss decreasing but the correlation was not stable. My loss value was around \textbf{\emph{0.42}} and the best correlation value on validate set I got was only \textbf{\emph{0.15}}.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\textwidth]{week12-amnet-devset-v1-loss.png}
+\caption{Loss over Epoch (on Train set).}
+\end{figure}
+
+\newpage
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\textwidth]{week12-amnet-devset-v1-correl.png}
+\caption{Correlation over Epoch (on Test set).}
+\end{figure}
+
+Lately, I used this pre-trained model to calculate the correlation value on the test set but unfortunately, the result was just only \textbf{\emph{0.001}}.
+
+
+\section{Conclusion on Long-Term Memorability Set}
+From the beginning till this time, I only focused on the long-term memo-rability set and I still could not make anything worked. At this state, I thought I finally figured out why all of my effort was just wasting time, because the long-term memorability dataset was bullshit.
 
 
 
