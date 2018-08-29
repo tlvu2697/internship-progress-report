@@ -79,6 +79,16 @@ The authors also proposed their custom loss function in their paper. Their loss 
 
 The authors claimed that the entire model was fully differentiable and train-ed end-to-end with the ADAM\cite{adam} optimizer with a fixed learning rate $10^{−3}$. The input image feature vector was extracted from the $43^{rd}$ layer of the RestNet50 with dimensions [14 $\times$ 14 $\times$ 1024]. The ResNet50 was trained for image classification on the ImageNet dataset and its weights were not updated during the AMNet training.
 
+Evaluation on the LaMem dataset was performed by training one model on each of the five random splits as suggested by the authors and then reporting the final memorability rank correlation and MSE , averaged over the results from five corresponding test datasets.
+
+In Figure 1.7 below the author showed that the AMNet model with the active attention achieves $\rho$ = 0.677, or a 5.8\% improvement over the best known method MemNet\cite{lamem}. Even without attention the AMNet outperforms prior work by 3.6\% which demonstrated that the pretrained, deep CNN with their recurrent and regression network layers still achieve high accuracy.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.5\textwidth]{week12-amnet-results.png}
+\caption{Average Spearman’s rank correlation $\rho$ and MSE over 5 test splits of the LaMem dataset.}
+\end{figure}
+
 \subsection{Training on LaMem-Set (extracted by Inceptionv3)}
 \subsubsection{Strategy}
 Instead of using the input image feature vector of dimensions [14 $\times$ 14 $\times$ 1024] and having the sequence length of 14 $\times$ 14 as AMNet, I used the input image feature vector of dimensions [1 $\times$ 2048] and my sequence length was 1. I did not want to complicate my loss function, I just used the mean squared error only. I splitted the LaMem-Set for into two parts, the total number of images was \textbf{\emph{55000}}, I picked \textbf{\emph{45000}} images for training, and \textbf{\emph{10000}} images testing.
