@@ -114,10 +114,10 @@ Lately, I used this pre-trained model to calculate the correlation value on the 
 
 \subsection{Training on Dev-Set (extracted by ResNet50)}
 \subsubsection{Strategy}
-I used the same input strategy as the previous version that I trained on LaMem-Set. I also try to conduct the same loss function as the one proposed by the authors which was a combination of mean squared error and attention penalty. I splitted the provided Dev-Set for this challenge into three parts, since the Dev-Set had 8000 videos, I picked \textbf{\emph{6000}} videos for training, \textbf{\emph{1000}} videos for validating and the last \textbf{\emph{1000}} videos for testing.
+I used the same input strategy as the previous version that I trained on LaMem-Set. I splitted the provided Dev-Set for this challenge into three parts, since the Dev-Set had 8000 videos, I picked \textbf{\emph{6000}} videos for training, \textbf{\emph{1000}} videos for validating and the last \textbf{\emph{1000}} videos for testing.
 
-\subsection{Version 1}
-I kept the input size and hidden size as the same as the previous version that I trained on LaMem-Set. This times I changed the number of stacking LSTM layer to \textbf{\emph{1}} and the sequence length to \textbf{\emph{8}}. There was one new hyper-parameter gamma which specified the impact of the attention penalty. I used its value of \textbf{\emph{1e-3}}. Finally was the ADAM optimizer with learning rate of \textbf{\emph{1e-4}}.
+\subsubsection{Version 1}
+I kept the input size and hidden size as the same as the previous version that I trained on LaMem-Set. This times I changed the number of stacking LSTM layer to \textbf{\emph{1}} and the sequence length to \textbf{\emph{8}}. Finally was the ADAM optimizer with learning rate of \textbf{\emph{1e-4}}.
 
 After \textbf{\emph{100}} epochs I luckily got the loss decreasing but the correlation was not stable. My loss value was around \textbf{\emph{0.42}} and the best correlation value on validate set I got was only \textbf{\emph{0.15}}.
 
@@ -131,24 +131,11 @@ After \textbf{\emph{100}} epochs I luckily got the loss decreasing but the corre
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=\textwidth]{week12-amnet-devset-v1-correl.png}
-\caption{Correlation over Epoch (on Test set).}
+\caption{Correlation over Epoch (on Validate set).}
 \end{figure}
 
 Lately, I used this pre-trained model to calculate the correlation value on the test set but unfortunately, the result was just only \textbf{\emph{0.001}}.
 
 
 \section{Conclusion on Long-Term Memorability Set}
-From the beginning till this time, I only focused on the long-term memo-rability set and I still could not make anything worked. At this state, I thought I finally figured out why all of my effort was just wasting time, because the long-term memorability dataset was bullshit.
-
-
-
-
-
-
-
-
-
-
-
-
-
+From the beginning till this time, I only focused on the long-term memo-rability set and I still could not make anything worked. At this state, I thought I finally figured out why all of my effort was just wasting time, because the long-term memorability dataset was not reliable at all.
