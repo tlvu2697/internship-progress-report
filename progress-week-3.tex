@@ -3,13 +3,9 @@ I have spent the majority of my time this week deploying, testing DLib\cite{dlib
 
 \section{DLib}
 \subsection{Installation}
-To effectively manage different environments on my computer, I used Miniconda to install new frameworks. Here is the \href{https://raw.githubusercontent.com/tlvu2697/miniconda-scripts/master/dlib-setupenv.sh}{script} to install DLib environment via Miniconda.
+To effectively manage different environments on my computer, I used Mini-conda to install new frameworks. Here is the \href{https://raw.githubusercontent.com/tlvu2697/miniconda-scripts/master/dlib-setupenv.sh}{script} to install DLib environment via Miniconda.
 
-Installation:
-	\begin{lstlisting}
-    curl https://raw.githubusercontent.com/tlvu2697/
-miniconda-scripts/master/dlib-setupenv.sh | bash
-	\end{lstlisting}
+The installation script could be found in repository of colab script on my GitLab.
 
 \subsection{Face Detector}
 DLib provided a python example of Face Detector \href{http://dlib.net/face_detector.py.html}{here} for everybody to follow up. I referred to the example above and also made some changes to add bounding box to outputs.
@@ -50,13 +46,7 @@ In this case, the default Upsampling threshold which was 1 already worked so goo
 
 \newpage
 \subsection{Face Recognition}
-DLib provides a python example of Face Recognition \href{http://dlib.net/face_recognition.py.html}{here} to follow. For this algorithm I just focused on how to run it.
-
-DLib also provides trained facial shape predictor and trained recognition model which can be download at:
-\begin{itemize}
-\item Shape predictor: \href{http://dlib.net/files/shape_predictor_5_face_landmarks.dat.bz2}{here}
-\item Face recognition model: \href{http://dlib.net/files/dlib_face_recognition_resnet_model_v1.dat.bz2}{here}
-\end{itemize}
+DLib provides a python example of Face Recognition \href{http://dlib.net/face_recognition.py.html}{here} to follow. For this algorithm I just focused on how to run it. DLib also provides trained facial shape predictor dataset \href{http://dlib.net/files/shape_predictor_5_face_landmarks.dat.bz2}{here} and trained recognition model here \href{http://dlib.net/files/dlib_face_recognition_resnet_model_v1.dat.bz2}{here} to download.
 
 The mission of this algorithm is to take input as an image and make output of a distinct 128 elements vector for each input person.
 
@@ -89,34 +79,12 @@ I don't know what to do next with the 128 elements vector provided by Face Recog
 How can we evaluate the Face Detection and Face Recognition performance? And how to test their correctness?
 
 
-\newpage
 \section{YOLO}
 \subsection{Installation}
-YOLO can be built with CUDA to run on GPU which is much faster than CPU. You must have CUDA installed on your machine to build YOLO with CUDA option.
+YOLO can be built with CUDA to run on GPU which is much faster than CPU. You must have CUDA installed on your machine to build YOLO with CUDA option. I already wrote a script to make the CUDA installation process easier.
 
-I already wrote a script to make the CUDA installation process easier. Follow the GPU installation below for more details.
+There was an important note here, if I wanted to use the python example code provided by YOLO, I first must compile the YOLO framework to get the '.so' file, then I had to change the path to that file inside the python code (the file path must be full path, not relative path). And because the library itself was coded by C programming language, so every string type variable must be transform to Byte form by inserting a character 'b' to the beginning of the string (outside the quotation mark).
 
-Installation (CPU):
-\begin{lstlisting}
-    git clone https://github.com/pjreddie/darknet
-    cd darknet
-    make
-\end{lstlisting}
-
-Installation (GPU):
-\begin{lstlisting}
-    # Install CUDA first
-    curl https://raw.githubusercontent.com/tlvu2697/colab-
-scripts/master/cuda80-setup.sh | bash
-
-    git clone https://github.com/pjreddie/darknet
-    cd darknet
-
-    # Change the first line of the Makefile to GPU=1
-    make
-\end{lstlisting}
-
-\newpage
 \subsection{Object Detection}
 \begin{figure}[!ht]
 \centering

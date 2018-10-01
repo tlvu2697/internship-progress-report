@@ -1,0 +1,36 @@
+\section{Introduction}
+I have spent the majority of my time this week trying my LSTM with others features extract with multiple methods and re-implementing the extracting features part of TensorFlow for Poets to build up the full network version (Extracting Feature and LSTM in a single network)
+
+\section{PyTorch LSTM Classification Network}
+So far I had tried many different methods to extract features and used them as input for my LSTM network, but I found that the method that providing the best features for my LSTM network was the pretrained Inception V3 model from 2015 by Google TensorFlow for Poets.
+
+This week I tried normalizing the images before extracting their features with PyTorch's pretrained models. But the results were just the same as TensorHub, they all could not be better than the TensorFlow for Poets' features.
+
+\section{Full Network}
+\subsection{Feature Extracting Layer}
+Based on the example code by TensorFlow for Poets, I implemented my own version.
+
+\textbf{\emph{Step 1}}. Retrieving Inception V3 model detail information such as where to download it, bottleneck layer's name, size of extracting features, input images' size required by model, mean and standard deviation for normalizing input images.
+
+\textbf{\emph{Step 2}}. Using the model link provide at step 1 to download and extract the model on disk.
+
+\textbf{\emph{Step 3}}. Generating default TensorFlow Graph\cite{tfgraph}, grasping the tensors of resizing input images, computing bottleneck values from the model downloaded at step 2. Then I had to add both tensors above to the generated Graph for further usages.
+
+\textbf{\emph{Step 4}}. Creating tensor to decode input images from string type to float types and another tensor to reshape and normalize decoded images from the size information got from step 1. Then I had to add both tensors above to the generated Graph for further usages.
+
+\textbf{\emph{Step 5}}. Examining all input videos, caching their bottleneck values on disk and loading them into training dataset at the same time.
+
+\subsection{Long-Short Term Memory Layer}
+This Long-Short Term Memory layer was backed by Keras, took in the feature vectors from first part above and outputted a sequence of 8 vectors (for each video).
+
+The input size of this layer was equivalent to the size of the feature vectors (of length 2048) for each video which was totally [8, 2048], the drop out indicating fraction of the units to drop for the linear transformation of the inputs was 0.5, the hidden size indicating dimensionality of the output space was set to be 1024 or 2048 based on preference. The output size of this layer would be [8, 1024] or [8, 2048] based on how I configed the hidden size. One more notable thing was that I only used one LSTM layer which meant there was no stacking here.
+
+\subsection{Time-Distributed Layer}
+This Time-Distributed layer was also backed by Keras, took in the output sequence of vectors from LSTM layer and outputted the memorability score of a video.
+
+The input size of this layer was [8, 1024] or [8, 2048] based on the previous layer. This layer applied the Dense layer to each timestep independently, outputted a vector of size [8, 1] for each input indicating the memorability score through out every timestep (every frame).
+
+The last layer attached to this Time-Distributed layer was Lambda layer. Its purpose was to extract only the last memorability score (from [8, 1] to [1, 1]) of the Time-Distributed's output.
+
+\subsection{Cost Function and Optimizer}
+The official cost function of this model was Mean-Squared Error, and the offical optimizer was Adam optimizer with default learning-rate of 1e-3.

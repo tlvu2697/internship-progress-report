@@ -1,9 +1,9 @@
 \section{Introduction}
 I have spent the majority of my time this week having a look at tasks from MultiMediaEval 2018\cite{mediaeval18}, examining the dataset and considering appropriate strategies.
 
-\section{Medico Multimedia}\cite{medico18}
+\section{Medico Multimedia\cite{medico18}}
 \subsection{Description}
-The Medico Task tackled the challenge of predicting diseases based on multimedia data collected in hospitals with two additional requirements: perform the analysis efficiently and use as little data as possible for training.
+The Medico Task tackled the challenge of predicting diseases based on multi-media data collected in hospitals with two additional requirements: perform the analysis efficiently and use as little data as possible for training.
 
 Beside the 2 main tasks there were 2 more optional subtasks which were basic reporting required built system to generate summarization of a video in terms of how many different diseases and findings have occurred (e.g. if the same polyp occurs twice it should only be counted one time for the summary); and advanced reporting required the built system to automatically create a text-report for a physician for three video cases.
 
@@ -12,7 +12,7 @@ Beside the 2 main tasks there were 2 more optional subtasks which were basic rep
 
 The first one was the image-type dataset to work with, containing 5293 images with multiple resolutions, 16 classes. The image files were encoded using JPEG compression\cite{jpeg}, extension of the image files was ".jpg". 
 
-The second one contained the extracted visual feature descriptors for all the image from the first dataset. The extracted visual features were stored in separate folders and files named accordingly to the name and the path of the corresponding image files. The extracted visual features were the global image features, namely: JCD, Tamura, ColorLayout, EdgeHistogram, AutoColorCorrelogram and PHOG. Each feature vector consists of a number of floating point values. The size of the vector depends on the feature. The size of the feature vectors are: 168 (JCD), 18 (Tamura), 33 (ColorLayout), 80 (EdgeHistogram), 256 (AutoColorCorrelogram) and 630 (PHOG). The extension of the extracted visual feature files was ".features".
+The second one contained the extracted visual feature descriptors for all the image from the first dataset. The extracted visual features were stored in separate folders and files named accordingly to the name and the path of the corresponding image files. The extracted visual features were the global image features, namely: JCD, Tamura, ColorLayout, EdgeHistogram, Auto-ColorCorrelogram and PHOG. Each feature vector consists of a number of floating point values. The size of the vector depends on the feature. The size of the feature vectors are: 168 (JCD), 18 (Tamura), 33 (Color-Layout), 80 (EdgeHistogram), 256 (AutoColorCorrelogram) and 630 (PHOG). The extension of the extracted visual feature files was ".features".
 
 After examining the dataset I had the result of number of images per class: \textbf{\emph{polyps}} had 613 images, \textbf{\emph{dyed-lifted-polyps}} had 457 images, \textbf{\emph{ulcerative-colitis}} had 457 images, \textbf{\emph{esophagitis}} had 444 images, \textbf{\emph{normal-pylorus}} had 439 images, \textbf{\emph{normal-z-line}} had 437 images, \textbf{\emph{dyed-resection-margins}} had 416 images, \textbf{\emph{normal-cecum}} had 416 images, \textbf{\emph{retroflex-stomach}} had 398 images, \textbf{\emph{stool-plenty}} had 366 images, \textbf{\emph{colon-clear}} had 267 images, \textbf{\emph{retroflex-rectum}} had 237 images, \textbf{\emph{blurry-nothing}} had 176 images, \textbf{\emph{stool-inclusions}} had 130 images, \textbf{\emph{instruments}} had 36 images, \textbf{\emph{out-of-patient}} had 4 images.
 
@@ -20,20 +20,19 @@ After examining the dataset I had the result of number of images per class: \tex
 \subsubsection{ResNet\cite{resnet}}
 My reconfigured ResNet model could be found \href{https://github.com/tlvu2697/mediaeval-18--medico-multimedia}{on my GitHub}.
 
-\section{Emotional Impact of Movies}\cite{emotion18}
+\section{Emotional Impact of Movies\cite{emotion18}}
 
 \section{Media Memorability}
 \subsection{Description}
-The Predicting Media Memorability Task\cite{memo18} required participants to
-build systems predicting how memorable a video was, by computing a memorability score for each input video.
+The Predicting Media Memorability Task\cite{memo18} required participants to build systems predicting how memorable a video was, by computing a memorability score for each input video.
 
-Beside the main task there were 2 more subtasks which were Short-term Memorability and Long-term Memorability\cite{longtermmem}. The Short-term Memorability subtask involves predicting a short-term memorability score for a given video. The Long-term Memorability subtask involves predicting a long-term memorability score for a given video.
+Beside the main task there were 2 more subtasks which were Short-term Memorability and Long-term Memorability\cite{longtermmem}. The Short-term Memorability subtask involves predicting a short-term memorability score for a given video. The Long-term Memorability subtask involves predicting a long-term memo-rability score for a given video.
 
 \subsection{Dataset}
 \subsubsection{Overview}
 The dataset was composed of 10,000 short soundless videos (named from video1.webm to video10000.webm); 8,000 elements (randomly picked) for the development set and the other 2,000 elements for the test set.
 
-Each video came with its original title (might be useful to infer the memorability of video); its short-term memorability score; the number of annotations which was used to calculate its short-term memorability score; its long-term memorability score; the number of annotations which was used to calculate its long-term memorability score.
+Each video came with its original title (might be useful to infer the memo-rability of video); its short-term memorability score; the number of annotations which was used to calculate its short-term memorability score; its long-term memorability score; the number of annotations which was used to calculate its long-term memorability score.
 
 \subsubsection{Data}
 All 8,000 videos were placed in /source folder and named with format of video\{\}.webm; their original titles were placed in dev-set\_video-captions.txt. Each video was 7 seconds long and soundless.
