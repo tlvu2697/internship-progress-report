@@ -34,3 +34,43 @@ The last layer attached to this Time-Distributed layer was Lambda layer. Its pur
 
 \subsection{Cost Function and Optimizer}
 The official cost function of this model was Mean-Squared Error, and the offical optimizer was Adam optimizer with default learning-rate of 1e-3.
+
+\section{Results}
+
+After training, 5 checkpoints were selected for each sub-task (short-term and long-term).
+
+\textbf{For short-term subtask}, we chose 2 Time-Distributed checkpoints each with 2048 hidden units, 1 Time-Distributed checkpoints with 1024 hidden units, and 2 AMNet checkpoints on split 0 and split 4. The table below demonstrated the checkpoints' names and their train, test correlation. The term \emph{TD} indicated Time-Distributed, \emph{AMNet} indicated AMNet model. The second terms indicated additional information about the checkpoints (hidden units sizes for Time-Distributed and split number for AMNet).
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{@{}lcc@{}}
+Checkpoint & Train Correl & Test Correl \\ \midrule
+TD-2048 & 0.5325 & 0.479 \\
+TD-1024 & 0.5105 & 0.484 \\
+AMNet-split0 & 0.480 & 0.447 \\
+AMNet-split1 & 0.487 & 0.455 \\
+TD-0.5246-2048 & 0.5246 & 0.478
+\end{tabular}
+\caption{Short-term Spearman's Rank Correlation (Official Test Set)}
+\end{center}
+\end{table}
+
+The results are pretty much what we expected initially. Time distributed models with 2048 units turned out to have slightly worse performance than the one with 1024 units. This may due to the fact that the model is more complicated and we did chose these models after 40th epoch, where overfitting usually occurs.
+
+\textbf{For long-term subtask}, we chose 3 different checkpoints, 1 Time-Dis-tributed with 1024 hidden units being trained on long-term data, another Time-Distributed (also have 1024 hidden units) being trained on short-term data, 1 AMNet model. For the other two runs, we reused two pre-trained model purely on short-term data (from the short-term subtask). The table below demonstrated the checkpoints' names and their train, test correlation. The term \emph{TD} indicated Time-Distributed, \emph{AMNet} indicated AMNet model. The second terms indicated additional information about the checkpoints (hidden units sizes for Time-Distributed and split number for AMNet). And the terms \emph{byLong} or \emph{byShort} indicated which dataset the checkpoints were being trained with.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{@{}lcc@{}}
+Checkpoint & Train Correl & Test Correl \\ \midrule
+TD-byLong-1024 & 0.2559 & 0.214 \\
+TD-byShort-1024 & 0.2608 & 0.257 \\
+AMNet & 0.159 & 0.194 \\
+TD-2048 (from Short-term) & 0.5325 (on Short) & 0.251 \\
+TD-1024 (from Short-term) & 0.5105 (on Short) & 0.253
+\end{tabular}
+\caption{Long-term Spearman's Rank Correlation (Official Test Set)}
+\end{center}
+\end{table}
+
+The rank correlation score for models which were trained/validated on short-term dataset do have better results than those trained on long-term dateset.

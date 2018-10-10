@@ -12,7 +12,7 @@ Beside the 2 main tasks there were 2 more optional subtasks which were basic rep
 
 The first one was the image-type dataset to work with, containing 5293 images with multiple resolutions, 16 classes. The image files were encoded using JPEG compression\cite{jpeg}, extension of the image files was ".jpg". 
 
-The second one contained the extracted visual feature descriptors for all the image from the first dataset. The extracted visual features were stored in separate folders and files named accordingly to the name and the path of the corresponding image files. The extracted visual features were the global image features, namely: JCD, Tamura, ColorLayout, EdgeHistogram, Auto-ColorCorrelogram and PHOG. Each feature vector consists of a number of floating point values. The size of the vector depends on the feature. The size of the feature vectors are: 168 (JCD), 18 (Tamura), 33 (Color-Layout), 80 (EdgeHistogram), 256 (AutoColorCorrelogram) and 630 (PHOG). The extension of the extracted visual feature files was ".features".
+The second one contained the extracted visual feature descriptors for all the image from the first dataset. The extracted visual features were stored in separate folders and files named accordingly to the name and the path of the corresponding image files. The extracted visual features were the global image features, namely: JCD, Tamura, ColorLayout, EdgeHistogram, Auto-ColorCorrelogram and PHOG. Each feature vector consists of a number of floating point values. The size of the vector depends on the feature. The size of the feature vectors are: 168 (JCD), 18 (Tamura), 33 (Color-Layout), 80 (EdgeHistogram), 256 (AutoColorCorrelogram) and 630 (PHOG). The exten-sion of the extracted visual feature files was ".features".
 
 After examining the dataset I had the result of number of images per class: \textbf{\emph{polyps}} had 613 images, \textbf{\emph{dyed-lifted-polyps}} had 457 images, \textbf{\emph{ulcerative-colitis}} had 457 images, \textbf{\emph{esophagitis}} had 444 images, \textbf{\emph{normal-pylorus}} had 439 images, \textbf{\emph{normal-z-line}} had 437 images, \textbf{\emph{dyed-resection-margins}} had 416 images, \textbf{\emph{normal-cecum}} had 416 images, \textbf{\emph{retroflex-stomach}} had 398 images, \textbf{\emph{stool-plenty}} had 366 images, \textbf{\emph{colon-clear}} had 267 images, \textbf{\emph{retroflex-rectum}} had 237 images, \textbf{\emph{blurry-nothing}} had 176 images, \textbf{\emph{stool-inclusions}} had 130 images, \textbf{\emph{instruments}} had 36 images, \textbf{\emph{out-of-patient}} had 4 images.
 
@@ -21,6 +21,45 @@ After examining the dataset I had the result of number of images per class: \tex
 My reconfigured ResNet model could be found \href{https://github.com/tlvu2697/mediaeval-18--medico-multimedia}{on my GitHub}.
 
 \section{Emotional Impact of Movies\cite{emotion18}}
+\subsection{Description}
+There were two types of emotion which were expected emotions and induced emotions. The expected emotion was the emotion which most of the audience feels in  the same context. This type of emotions could be considered objective because it reflected the unanimous response of audiences to a given stimulus \cite{emotion}. On the other hand, induced emotion was subjective and context dependent. In other words, induced emotions were somewhat personal emotions while expected emotions were the general emotions of a population.
+
+\begin{figure}[!ht]
+\centering
+\begin{subfigure}{0.5\textwidth}
+  \centering
+  \includegraphics[height=0.17\textheight,keepaspectratio]{week8-emo-valence-arousal.png}
+  \caption{Image of Joel Eaton et al.}
+\end{subfigure}%
+\begin{subfigure}{0.5\textwidth}
+  \centering
+  \includegraphics[height=0.18\textheight,keepaspectratio]{week8-emo-types.png}
+  \caption{Image of Tejas Mahajan.}
+\end{subfigure}
+\caption{Expected emotions vs Induced emotions.}
+\end{figure}
+
+Moreover, the emotion felt during a movie scene may also depended on the previous emotions as well as scenes. Therefore, temporal information could be used to predict emotions.
+
+In particular, our objective was to predict a score of \textbf{induced valance} (which was the attractiveness (positive valence) or the averseness (negative valence) \cite{valence}) and \textbf{induced arousal} (which was the level of excitement). Va-lence could be negative (e.g. sad, disappointed, etc.) or positive (e.g. joyful, elated, ...). Arousal ranged from inactive (e.g. tired, pensive, calm) to active (e.g. alarmed, angry, excited). Valence and arousal score could be represented as scores from -1 to 1. The expected emotions were then calculated based on these two scores (see figure 7.6). In this task, we would only have to compute the induced emotions scores. The second task of the challenge was fear prediction. We would have to predict and label the beginning and ending times of video sequences that caused fear in movies. The objective of this task was pretty clear so I would continue to the next task of summarizing the dataset.
+
+\subsection{Dataset}
+The development set contained 44 movies (durations of 15 hours and 20 minutes) for both subtasks as well as a complementary set of 10 movies (dura-tions of 11 hours and 29 minutes) just for the first subtask. There were audio and video features provided for all videos. Annotations for both subtasks were also available is development set. The test set consisted of 12 movies (total durations of 8 hours and 50 minutes). Neither audio nor video features were provided as the time of this report.
+
+\subsection{Train Set}
+
+\textbf{Audio features}: The audio features were extracted using openSmile too-lbox \cite{opensmile}. There are a total of 1,582 features for each second of the video. All features are stored in \textit{.csv} format.
+
+\textbf{Visual features}: Visual features were also extracted for every second of each video. Each frame was extracted using ffmpeg command: "ffmpeg -loglevel error -i movie.mp4 -r 1 -f image2 frame-\%05d.jpg". Most features were extracted using LIRE library with the exception of vgg16 fc6 output.
+
+This was the list of all provided visual features: Auto Color Correlogram (acc), Color and Edge Directivity Descriptor (cedd), Color Layout (cl), Edge Histogram (eh), Fuzzy Color and Texture Histogram (fcth), Gabor (gabor), Joint descriptor joining CEDD and FCTH in one histogram (jcd), Scalable Color (sc), Tamura (tamura), Local Binary Patterns (lbp), VGG16 fc6 layer output (fc6).
+
+\subsection{Test Set}
+At the moment, only the source video are available. There were 12 movies in test set.
+
+\subsection{Evaluation}
+Mean Square Error and Pearson correlation coefficient would be used for the Valence/Arousal prediction subtask. And Intersection over Union of time in-tervals would be used for the Fear prediction subtask.
+
 
 \section{Media Memorability}
 \subsection{Description}
@@ -43,7 +82,6 @@ All 8,000 videos were placed in /source folder and named with format of video\{\
 \caption{video124 -- children-help-their-mother-mix-ingredients}
 \end{figure}
 
-\newpage
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=0.8\textwidth]{week8-me-mo-video9740.png}
